@@ -1,12 +1,5 @@
 import {Component} from '@angular/core';
 
-interface TableItem {
-    index: number;
-    first: string;
-    last: string;
-    nickname: string;
-}
-
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
