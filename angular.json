@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "progressive-rendering": {
+        "sample-app": {
             "projectType": "application",
             "schematics": {},
             "root": "",
@@ -13,7 +13,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/progressive-rendering",
+                        "outputPath": "dist/sample-app",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "progressive-rendering:build"
+                        "browserTarget": "sample-app:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "progressive-rendering:build:production"
+                            "browserTarget": "sample-app:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "progressive-rendering:build"
+                        "browserTarget": "sample-app:build"
                     }
                 },
                 "test": {
@@ -107,38 +107,38 @@
                 }
             }
         },
-        "progressive": {
+        "progressive-rendering": {
             "projectType": "library",
-            "root": "projects/progressive",
-            "sourceRoot": "projects/progressive/src",
+            "root": "projects/progressive-rendering",
+            "sourceRoot": "projects/progressive-rendering/src",
             "prefix": "lib",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:ng-packagr",
                     "options": {
-                        "tsConfig": "projects/progressive/tsconfig.lib.json",
-                        "project": "projects/progressive/ng-package.json"
+                        "tsConfig": "projects/progressive-rendering/tsconfig.lib.json",
+                        "project": "projects/progressive-rendering/ng-package.json"
                     },
                     "configurations": {
                         "production": {
-                            "tsConfig": "projects/progressive/tsconfig.lib.prod.json"
+                            "tsConfig": "projects/progressive-rendering/tsconfig.lib.prod.json"
                         }
                     }
                 },
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "main": "projects/progressive/src/test.ts",
-                        "tsConfig": "projects/progressive/tsconfig.spec.json",
-                        "karmaConfig": "projects/progressive/karma.conf.js"
+                        "main": "projects/progressive-rendering/src/test.ts",
+                        "tsConfig": "projects/progressive-rendering/tsconfig.spec.json",
+                        "karmaConfig": "projects/progressive-rendering/karma.conf.js"
                     }
                 },
                 "lint": {
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
                         "tsConfig": [
-                            "projects/progressive/tsconfig.lib.json",
-                            "projects/progressive/tsconfig.spec.json"
+                            "projects/progressive-rendering/tsconfig.lib.json",
+                            "projects/progressive-rendering/tsconfig.spec.json"
                         ],
                         "exclude": [
                             "**/node_modules/**"
@@ -148,5 +148,5 @@
             }
         }
     },
-    "defaultProject": "progressive-rendering"
+    "defaultProject": "sample-app"
 }

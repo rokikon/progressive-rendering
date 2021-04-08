@@ -1,11 +1,11 @@
 import {ChangeDetectorRef, Injectable, NgZone, TemplateRef, TrackByFunction, ViewContainerRef, ViewRef} from '@angular/core';
-import { animationFrameScheduler } from 'rxjs';
+import {animationFrameScheduler} from 'rxjs';
 import {first} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ProgressiveService {
+export class ProgressiveRenderingService {
     currentRenderingIndex = 0;
     renderingQueueLength = 0;
 
@@ -28,10 +28,12 @@ export class ProgressiveService {
                     .createEmbeddedView(templateRef, {$implicit: items[index].item, index});
                 map.set(trackBy(index, items[index].item), embeddedView);
                 if (index < items.length) {
-                    zone.onMicrotaskEmpty.pipe(first()).subscribe(() => {
-                        updateRenderingQueue();
-                        this.schedule(index + 1);
-                    });
+                    zone.onMicrotaskEmpty
+                        .pipe(first())
+                        .subscribe(() => {
+                            updateRenderingQueue();
+                            this.schedule(index + 1);
+                        });
                     if (cdr) {
                         cdr.markForCheck();
                     }

@@ -10,17 +10,17 @@ import {
     ViewContainerRef,
     ViewRef,
 } from '@angular/core';
-import { ProgressiveService } from './progressive.service';
+import { ProgressiveRenderingService } from './progressive-rendering.service';
 
 @Directive({
-    selector: '[progressiveFor]',
+    selector: '[progressiveRenderingFor]',
 })
-export class ProgressiveDirective implements DoCheck {
-    @Input('progressiveFor') items;
+export class ProgressiveRenderingDirective implements DoCheck {
+    @Input('progressiveRenderingFor') items;
     // tslint:disable-next-line:no-input-rename
-    @Input('progressiveForTrackBy') trackBy: TrackByFunction<any>;
+    @Input('progressiveRenderingForTrackBy') trackBy: TrackByFunction<any>;
 
-    @Input('progressiveForOf') set tmProgressiveForOf(items: any) {
+    @Input('progressiveRenderingForOf') set tmProgressiveForOf(items: any) {
         this._items = [...items];
 
         if (items && !this._difference) {
@@ -32,18 +32,17 @@ export class ProgressiveDirective implements DoCheck {
     private _items: any;
     private _itemsMap: Map<any, ViewRef> = new Map<any, ViewRef>();
     private _difference: IterableDiffer<any>;
-    private _defaultTrackByFunction: TrackByFunction<any> = (index: number, item: any) =>
-        item.multiSelectFrontUniqueKey || item.uniqueKey;
+    private _defaultTrackByFunction: TrackByFunction<any> = (index: number) => index;
 
     constructor(
         private templateRef: TemplateRef<any>,
         private viewContainer: ViewContainerRef,
         private differs: IterableDiffers,
-        private progressiveService: ProgressiveService,
+        private progressiveRenderingService: ProgressiveRenderingService,
         private cdr: ChangeDetectorRef) {
     }
 
-    ngDoCheck() {
+    ngDoCheck(): void {
         if (this._difference) {
             const items = [];
             const whatChanges = this._difference.diff(this._items);
@@ -67,7 +66,7 @@ export class ProgressiveDirective implements DoCheck {
                     currView.context.index = item.currentIndex;
                 });
                 if (items.length) {
-                    this.progressiveService.scheduleRendering(
+                    this.progressiveRenderingService.scheduleRendering(
                         items,
                         this.viewContainer,
                         this.templateRef,
